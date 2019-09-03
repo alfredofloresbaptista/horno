@@ -1,0 +1,93 @@
+# --- Created by Ebean DDL
+# To stop Ebean DDL generation, remove this comment and start using Evolutions
+
+# --- !Ups
+
+create table sensor (
+id int not null AUTO_INCREMENT,
+orden int not null,
+nombre varchar(50) not null,
+when_created datetime,
+when_updated datetime,
+version integer,
+state tinyint,
+constraint pk_sensor primary key (id)
+);
+
+create table medida (
+id int not null AUTO_INCREMENT,
+sensor_id int not null,
+temperatura float not null,
+humedad float not null,
+fechat bigint,
+when_created datetime,
+when_updated datetime,
+version integer,
+state tinyint,
+constraint pk_medida primary key (id)
+);
+
+alter table medida add constraint fk_medida_sensor_id foreign key (sensor_id) references sensor (id) on delete restrict on update restrict;
+create index ix_medida_sensor_id on medida (sensor_id);
+
+# --- !Downs
+
+alter table medida drop foreign key fk_medida_sensor_id;
+
+drop index ix_medida_sensor_id on medida;
+
+drop table if exists medida;
+
+drop table if exists sensor;
+
+
+
+
+
+
+
+
+create table author (
+id                            varchar(40) not null,
+last_name                     varchar(255) not null,
+first_name                    varchar(255) not null,
+middle_name                   varchar(255) not null,
+when_created                  datetime(6) not null,
+when_updated                  datetime(6) not null,
+version                       bigint not null,
+state                         tinyint(1) default 0 not null,
+constraint pk_author primary key (id)
+);
+
+create table medida (
+id int not null,
+sensor_id int not null,
+temperatura float not null,
+humedad float not null,
+fechat bigint,
+constraint pk_medida primary key (id)
+);
+
+create table sensor (
+id int not null, 
+order int not null,
+nombre varchar(50) not null
+constraint pk_sensor primary key (id)
+)
+
+alter table sensor drop foreign key pk_sensor;
+drop index ix_sensor on sensor;
+
+alter table medida drop foreign key pk_medida;
+drop index ix_medida on medida;
+
+insert into sensor(orden, nombre, version) values (1,'1',   0);
+insert into sensor(orden, nombre, version) values (2,'2',   0);
+insert into sensor(orden, nombre, version) values (3,'3',   0);
+insert into sensor(orden, nombre, version) values (4,'4',   0);
+insert into sensor(orden, nombre, version) values (5,'5',   0);
+insert into sensor(orden, nombre, version) values (6,'6',   0);
+insert into sensor(orden, nombre, version) values (7,'7',   0);
+insert into sensor(orden, nombre, version) values (8,'8',   0);
+insert into sensor(orden, nombre, version) values (9,'9',   0);
+insert into sensor(orden, nombre, version) values (10,'10',  0);
